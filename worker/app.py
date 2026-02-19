@@ -28,6 +28,10 @@ hooks = OptionalModelHooks()
 DATA_DIR = Path("/app/data")
 ensure_dir(DATA_DIR)
 
+@app.get("/")
+def root():
+    return {"service": "KYC Analyzer Worker", "status": "running"}
+
 @app.get("/health")
 def health():
     return {"ok": True}
