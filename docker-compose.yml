@@ -1,0 +1,35 @@
+services:
+  worker:
+    build: ./worker
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "8000:8000"
+
+  server:
+    build: ./server
+    restart: unless-stopped
+    environment:
+      - PORT=4000
+      - WORKER_URL=http://worker:8000
+      - UPLOAD_DIR=/app/uploads
+    ports:
+      - "4000:4000"
+    volumes:
+      - uploads:/app/uploads
+    depends_on:
+      - worker
+
+  client:
+    build: ./client
+    restart: unless-stopped
+    environment:
+      - VITE_API_BASE=http://localhost:4000
+    ports:
+      - "5173:5173"
+    depends_on:
+      - server
+
+volumes:
+  uploads:
