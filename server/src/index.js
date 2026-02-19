@@ -15,7 +15,17 @@ const WORKER_URL = process.env.WORKER_URL || "http://localhost:8000";
 const UPLOAD_DIR = process.env.UPLOAD_DIR || "./uploads";
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://kyc-app-jade.vercel.app"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+  })
+);
+app.options("*", cors());
 app.use(express.json({ limit: "10mb" }));
 app.use(morgan("dev"));
 
