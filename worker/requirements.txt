@@ -11,3 +11,5 @@ PyPDF2>=3.0
 fonttools>=4.50
 scipy>=1.10
 python-multipart>=0.0.9
+
+mediapipe

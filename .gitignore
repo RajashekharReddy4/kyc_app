@@ -1,9 +1,55 @@
-node_modules
-dist
+############################
+# Node / MERN
+############################
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+############################
+# React / Vite
+############################
+dist/
+build/
+.vite/
+.cache/
+
+############################
+# Environment variables
+############################
 .env
-.venv
-__pycache__
-*.pyc
-uploads
+.env.*
+!.env.example
+
+############################
+# Uploads & Case Data
+############################
+uploads/
+data/
+app/data/
 *.log
+audit.jsonl
+
+############################
+# Python / FastAPI Worker
+############################
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+
+############################
+# IDE
+############################
+.vscode/
+.idea/
 .DS_Store
+Thumbs.db
+
+############################
+# OS
+############################
+*.swp
+*.swo

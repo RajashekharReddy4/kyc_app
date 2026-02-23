@@ -122,7 +122,18 @@ def score_case(results: Dict[str, Any], weights: Dict[str, float], profile: str 
         else:
             decision_override = "FAIL"
 
+    
     # ------------------------------------
+    # Liveness gating (video)
+    # ------------------------------------
+    # If liveness checks fail, do not allow PASS.
+    lv = risks.get("liveness", 0.0)
+    if lv >= 1.0:
+        decision_override = "FAIL"
+    elif lv >= 0.6:
+        decision_override = decision_override or "REVIEW"
+
+# ------------------------------------
     # Weighted scoring
     # ------------------------------------
 
@@ -171,7 +182,8 @@ def compute_fraud_confidence(risks: Dict[str, float], decision: str) -> float:
         1.0 * risks.get("metadata", 0) +
         0.8 * risks.get("print_recapture", 0) +
         0.6 * risks.get("synthetic", 0) +
-        0.5 * risks.get("correlation", 0)
+        0.5 * risks.get("correlation", 0) +
+        0.9 * risks.get("liveness", 0)
     )
 
     # Sigmoid scaling (keeps result between 0 and 1)
